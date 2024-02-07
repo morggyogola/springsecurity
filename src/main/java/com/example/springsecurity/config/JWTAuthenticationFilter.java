@@ -1,5 +1,6 @@
 package com.example.springsecurity.config;
 import com.example.springsecurity.services.JWTService;
+import com.example.springsecurity.services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,7 +32,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
 
-        if(!(StringUtils.isEmpty(authHeader) ||org.apache.lang3.StringUtils.startsWith(authHeader, "Bearer "))) {
+        if(StringUtils.isEmpty(authHeader) || !org.apache.commons.lang3.StringUtils.startsWith(authHeader, "Bearer ")) {
 filterChain.doFilter(request,response);
 return;
         }
@@ -39,7 +40,7 @@ return;
         userEmail = jwtService.extractUserName(jwt);
 
         if (StringUtils.isNotEmpty(userEmail)&& SecurityContextHolder.getContext().getAuthentication()==null){
-            UserDetails userDetails=userService.userDetailService().loadUserByUsername(userEmail);
+            UserDetails userDetails=userService.userDetailsService().loadUserByUsername(userEmail);
         }
     }
 }
