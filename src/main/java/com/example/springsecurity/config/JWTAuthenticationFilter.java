@@ -20,11 +20,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     private final JWTService jwtService;
     private final UserService userService;
 
-    public JWTAuthenticationFilter(JWTService jwtService) {
-        this.jwtService = jwtService;
-    }
-
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
