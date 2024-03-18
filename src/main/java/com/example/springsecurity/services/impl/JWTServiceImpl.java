@@ -26,7 +26,7 @@ return Jwts.builder().setSubject(userDetails.getUsername())
     }   public String generateRefreshToken(Map<String,Object> extraClaims,UserDetails userDetails){
 return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
         .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(new Date(System.currentTimeMillis()+1000*60*24))
+        .setExpiration(new Date(System.currentTimeMillis()+7L * 24 * 60 * 60 * 1000))
         .signWith(getSigninKey(), SignatureAlgorithm.HS256)
         .compact();
     }
@@ -39,8 +39,9 @@ return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername(
        return claimsResolvers.apply(claims);
     }
     private Key getSigninKey(){
-        byte[] key = Decoders.BASE64.decode("Uijtjtofybyyfvjnqmf");
+        byte[] key = Decoders.BASE64.decode("97yD9DBThCSxMpjmqm+xQ+9NWaFJRhdZl0edvC0aPNg=");
         return Keys.hmacShaKeyFor(key);
+//        return Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
     private Claims extractAllClaims(String token){
         return Jwts.parserBuilder().setSigningKey(getSigninKey()).build().parseClaimsJws(token).getBody();

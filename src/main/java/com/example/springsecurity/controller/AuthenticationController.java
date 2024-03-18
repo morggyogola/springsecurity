@@ -1,6 +1,7 @@
 package com.example.springsecurity.controller;
 
 import com.example.springsecurity.dto.JwtAuthenticationResponse;
+import com.example.springsecurity.dto.RefreshTokenRequest;
 import com.example.springsecurity.dto.SignInRequest;
 import com.example.springsecurity.dto.SignUpRequest;
 import com.example.springsecurity.entities.User;
@@ -23,5 +24,9 @@ public class AuthenticationController {
     @PostMapping("/signin")
     public ResponseEntity<JwtAuthenticationResponse>  signin(@RequestBody SignInRequest signInRequest){
         return  ResponseEntity.ok(authenticationService.signin(signInRequest));
+    }
+    @PostMapping("/refresh")
+    public ResponseEntity<JwtAuthenticationResponse>  refresh(@RequestBody RefreshTokenRequest refreshTokenRequest){
+        return  ResponseEntity.ok(authenticationService.refreshToken(refreshTokenRequest));
     }
 }
